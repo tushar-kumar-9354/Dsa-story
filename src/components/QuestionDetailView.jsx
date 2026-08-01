@@ -434,25 +434,25 @@ export default function QuestionDetailView({
         {/* LEFT PANE: Solution Code Editor */}
         <div className={`notepad-pane ${mobileTab === 'CODE' ? 'mobile-visible' : 'mobile-hidden'}`}>
           <div className="code-editor-block">
-            <div className="code-editor-header">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <div className="code-editor-header" style={{ flexWrap: 'wrap', gap: '0.6rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Code size={16} /> Solution Code
                 </span>
 
                 {/* Code Language Dropdown */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', marginLeft: '0.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                   <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-dim)' }}>Lang:</span>
                   <select 
                     value={selectedLanguage}
                     onChange={(e) => setSelectedLanguage(e.target.value)}
                     style={{
-                      padding: '0.2rem 0.55rem',
+                      padding: '0.2rem 0.45rem',
                       borderRadius: '6px',
                       border: '1px solid var(--border-color)',
                       background: 'var(--bg-card)',
                       color: 'var(--primary)',
-                      fontSize: '0.8rem',
+                      fontSize: '0.775rem',
                       fontWeight: '800',
                       cursor: 'pointer',
                       outline: 'none'
@@ -466,24 +466,24 @@ export default function QuestionDetailView({
                 </div>
               </div>
               
-              <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center', marginLeft: 'auto' }}>
                 <button 
                   className="btn-secondary"
                   onClick={() => setFullscreenSection('code')}
-                  style={{ padding: '0.3rem 0.65rem', fontSize: '0.75rem', gap: '0.3rem' }}
+                  style={{ padding: '0.3rem 0.55rem', fontSize: '0.75rem', gap: '0.25rem' }}
                   title="Fullscreen View Code"
                 >
-                  <Maximize2 size={14} /> Fullscreen
+                  <Maximize2 size={13} /> Fullscreen
                 </button>
 
                 <button 
                   className="btn-secondary"
                   onClick={handleCopyCode}
-                  style={{ padding: '0.3rem 0.65rem', fontSize: '0.75rem', gap: '0.3rem' }}
+                  style={{ padding: '0.3rem 0.55rem', fontSize: '0.75rem', gap: '0.25rem' }}
                   title="Copy Solution Code to Clipboard"
                 >
-                  {codeCopied ? <Check size={14} color="#16a34a" /> : <Copy size={14} />}
-                  {codeCopied ? 'Copied!' : 'Copy Code'}
+                  {codeCopied ? <Check size={13} color="#16a34a" /> : <Copy size={13} />}
+                  {codeCopied ? 'Copied!' : 'Copy'}
                 </button>
               </div>
             </div>
