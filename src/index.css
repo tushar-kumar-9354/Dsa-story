@@ -597,19 +597,19 @@ body {
   display: none;
   background: var(--bg-card);
   border-bottom: 1px solid var(--border-color);
-  padding: 0.4rem;
-  gap: 0.4rem;
+  padding: 0.5rem 0.75rem;
+  gap: 0.5rem;
 }
 
 .mobile-tab-btn {
   flex: 1;
-  padding: 0.6rem;
+  padding: 0.55rem 0.75rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background: var(--bg-app);
   color: var(--text-dim);
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 0.825rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -631,7 +631,7 @@ body {
   display: inline-flex;
 }
 
-/* RESPONSIVE MOBILE & TABLET STYLES */
+/* RESPONSIVE MOBILE & TABLET STYLES - ELEGANT, SPACIOUS & PROPORTIONATE */
 @media (max-width: 1024px) {
   .story-side-pane {
     width: 380px;
@@ -669,8 +669,8 @@ body {
     width: 310px !important;
     z-index: 200;
     transform: translateX(-100%);
-    transition: transform 0.25s ease;
-    box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 6px 0 24px rgba(0,0,0,0.25);
   }
 
   .sidebar.mobile-open {
@@ -680,6 +680,7 @@ body {
   .workspace-split-body {
     flex-direction: column;
     overflow-y: auto;
+    padding: 0;
   }
 
   .notepad-pane.mobile-hidden,
@@ -693,23 +694,36 @@ body {
     width: 100% !important;
     border-right: none;
     border-left: none;
+    padding: 1.1rem;
+    gap: 1.25rem;
+  }
+
+  .notepad-textarea {
+    font-size: 0.875rem;
     padding: 0.85rem;
+    line-height: 1.6;
   }
 
   .workspace-header {
-    padding: 0.75rem 1rem;
-    gap: 0.5rem;
+    padding: 0.85rem 1.1rem;
+    gap: 0.6rem;
   }
 
   .modal-box {
-    max-width: 96vw !important;
+    max-width: 95vw !important;
     height: 92vh !important;
+    border-radius: 14px;
+  }
+
+  .story-card-blue {
+    padding: 1.1rem;
+    border-radius: 12px;
   }
 }
 
 @media (max-width: 480px) {
   .workspace-header {
-    padding: 0.65rem 0.75rem;
+    padding: 0.75rem 0.85rem;
   }
 
   .editable-title-input {
@@ -717,7 +731,13 @@ body {
   }
 
   .btn-primary, .btn-secondary, .theme-toggle-btn {
-    padding: 0.45rem 0.65rem;
-    font-size: 0.75rem;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.775rem;
+  }
+
+  .notepad-pane.mobile-visible,
+  .story-side-pane.mobile-visible {
+    padding: 0.85rem;
+    gap: 1rem;
   }
 }
