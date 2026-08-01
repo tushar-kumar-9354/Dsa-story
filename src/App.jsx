@@ -23,6 +23,7 @@ export default function App() {
   const [selectedDifficulty, setSelectedDifficulty] = useState('ALL');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Theme state: light or dark (ChatGPT Dark Mode)
   const [theme, setTheme] = useState(() => {
@@ -168,6 +169,8 @@ export default function App() {
         onToggleTheme={toggleTheme}
         user={currentUser}
         onLogout={handleLogout}
+        isMobileOpen={isMobileMenuOpen}
+        onCloseMobile={() => setIsMobileMenuOpen(false)}
       />
 
       {/* MAIN WORKSPACE */}
@@ -180,6 +183,7 @@ export default function App() {
         onToggleTheme={toggleTheme}
         isSidebarCollapsed={isSidebarCollapsed}
         onToggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+        onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
       />
 
       {/* ADD QUESTION MODAL */}

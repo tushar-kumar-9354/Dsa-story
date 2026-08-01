@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Plus, BookOpen, PanelLeftClose, PanelLeftOpen, CheckCircle, Circle, Trash2, X, Sun, Moon, RotateCcw, LogOut, User } from 'lucide-react';
+import { Search, Plus, BookOpen, PanelLeftClose, PanelLeftOpen, CheckCircle, Circle, Trash2, X, Sun, Moon, RotateCcw, LogOut } from 'lucide-react';
 
 export default function Sidebar({ 
   stories, 
@@ -19,7 +19,9 @@ export default function Sidebar({
   theme,
   onToggleTheme,
   user,
-  onLogout
+  onLogout,
+  isMobileOpen,
+  onCloseMobile
 }) {
   const availableAlgos = ['ALL', 'Sliding Window', 'Hash Map', 'DP', 'Two Pointers', 'Array', 'Tree', 'Graph', 'Math', 'String'];
 
@@ -41,8 +43,13 @@ export default function Sidebar({
     }
   };
 
+  const handleMobileSelectStory = (id) => {
+    onSelectStory(id);
+    if (onCloseMobile) onCloseMobile();
+  };
+
   return (
-    <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
+    <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isMobileOpen ? 'mobile-open' : ''}`}>
       {/* 1. Header & Primary Controls */}
       <div className="sidebar-header">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -78,13 +85,27 @@ export default function Sidebar({
               </button>
             )}
 
-            <button 
-              onClick={onToggleCollapse} 
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--primary)', padding: '0.3rem', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              title={isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}
-            >
-              {isCollapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
-            </button>
+            {/* Mobile Close Button */}
+            {isMobileOpen && (
+              <button 
+                onClick={onCloseMobile}
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text-main)', padding: '0.3rem' }}
+                className="mobile-only-btn"
+              >
+                <X size={20} />
+              </button>
+            )}
+
+            {!isMobileOpen && (
+              <button 
+                onClick={onToggleCollapse} 
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--primary)', padding: '0.3rem', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                title={isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}
+                className="desktop-only-btn"
+              >
+                {isCollapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
+              </button>
+            )}
           </div>
         </div>
 
@@ -220,7 +241,7 @@ export default function Sidebar({
               return (
                 <div
                   key={story.id}
-                  onClick={() => onSelectStory(story.id)}
+                  onClick={() => handleMobileSelectStory(story.id)}
                   style={{
                     width: '40px',
                     height: '40px',
@@ -254,7 +275,7 @@ export default function Sidebar({
               <div 
                 key={story.id} 
                 className={`question-item ${isActive ? 'active' : ''}`}
-                onClick={() => onSelectStory(story.id)}
+                onClick={() => handleMobileSelectStory(story.id)}
               >
                 <div className="question-item-header">
                   <div className="question-item-title" style={{ display: 'flex', alignItems: 'flex-start', gap: '0.35rem' }}>

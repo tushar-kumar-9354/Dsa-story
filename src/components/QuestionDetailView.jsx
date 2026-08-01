@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { BookOpen, Code, AlertTriangle, Copy, Check, Trash2, HelpCircle, CheckCircle, Circle, Sun, Moon, Sparkles, Loader2, Eye, Edit3, Maximize2, Minimize2, Target, Layers } from 'lucide-react';
+import { BookOpen, Code, AlertTriangle, Copy, Check, Trash2, HelpCircle, CheckCircle, Circle, Sun, Moon, Sparkles, Loader2, Eye, Edit3, Maximize2, Minimize2, Target, Menu } from 'lucide-react';
 import ApproachTagsInput from './ApproachTagsInput';
 import { generateQuestionStoryAndCode } from '../utils/aiService';
 
-// Helper to format story text: converts **word** into styled bold text and renders line breaks cleanly
+// Helper to format story text: clean placeholder when empty/filler, colorful badges when generated!
 function FormattedStoryText({ text, placeholder }) {
   let strText = '';
   if (typeof text === 'string') {
@@ -16,16 +16,116 @@ function FormattedStoryText({ text, placeholder }) {
     strText = String(text || '');
   }
 
-  if (!strText || !strText.trim()) {
-    return <div style={{ color: 'var(--text-dim)', fontStyle: 'italic' }}>{placeholder}</div>;
+  // Check if content is empty or default template filler text
+  const isTemplateFiller = 
+    !strText || 
+    !strText.trim() || 
+    strText.includes('Break this problem into physical metaphors') || 
+    strText.includes('Highlight the tricky pitfall in') ||
+    strText.includes('Mindful Story for');
+
+  if (isTemplateFiller) {
+    return (
+      <div style={{
+        padding: '1.5rem 1rem',
+        textAlign: 'center',
+        color: 'var(--text-dim)',
+        fontStyle: 'italic',
+        background: 'var(--bg-app)',
+        borderRadius: '10px',
+        border: '1px dashed var(--border-color)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '0.4rem'
+      }}>
+        <Sparkles size={22} color="var(--primary)" />
+        <div style={{ fontSize: '0.85rem', fontWeight: '700' }}>
+          {placeholder || "Click '✨ AI Generate' to generate a colorful Hinglish story & bottleneck!"}
+        </div>
+      </div>
+    );
   }
 
   const lines = strText.split('\n');
   return (
-    <div style={{ lineHeight: '1.7', fontSize: '0.925rem', color: 'var(--text-main)' }}>
+    <div style={{ lineHeight: '1.75', fontSize: '0.925rem', color: 'var(--text-main)' }}>
       {lines.map((line, lIdx) => {
         const safeLine = String(line || '');
         if (!safeLine.trim()) return <div key={lIdx} style={{ height: '0.4rem' }} />;
+
+        // 🎭 Physical Metaphor Header Badge
+        if (safeLine.includes('🎭') || safeLine.toLowerCase().includes('asli zindagi')) {
+          return (
+            <div key={lIdx} style={{
+              background: '#f3e8ff',
+              color: '#6b21a8',
+              padding: '0.45rem 0.85rem',
+              borderRadius: '8px',
+              fontWeight: '800',
+              margin: '0.6rem 0',
+              border: '1px solid #e9d5ff',
+              fontSize: '0.95rem'
+            }}>
+              {safeLine}
+            </div>
+          );
+        }
+
+        // ⚡ #1 Critical Trap Header Badge
+        if (safeLine.includes('⚡') || safeLine.toLowerCase().includes('critical trap') || safeLine.toLowerCase().includes('bottleneck')) {
+          return (
+            <div key={lIdx} style={{
+              background: '#fef2f2',
+              color: '#991b1b',
+              padding: '0.45rem 0.85rem',
+              borderRadius: '8px',
+              fontWeight: '800',
+              margin: '0.6rem 0',
+              border: '1px solid #fecaca',
+              fontSize: '0.95rem'
+            }}>
+              {safeLine}
+            </div>
+          );
+        }
+
+        // 💡 Memory Trick Header Badge
+        if (safeLine.includes('💡') || safeLine.toLowerCase().includes('memory trick') || safeLine.toLowerCase().includes('shortcut')) {
+          return (
+            <div key={lIdx} style={{
+              background: '#fef9c3',
+              color: '#854d0e',
+              padding: '0.45rem 0.85rem',
+              borderRadius: '8px',
+              fontWeight: '800',
+              margin: '0.6rem 0',
+              border: '1px solid #fef08a',
+              fontSize: '0.95rem'
+            }}>
+              {safeLine}
+            </div>
+          );
+        }
+
+        // 📌 Step Badges
+        if (safeLine.includes('STEP 1') || safeLine.includes('STEP 2') || safeLine.includes('STEP 3') || safeLine.includes('📌')) {
+          return (
+            <div key={lIdx} style={{
+              background: '#eff6ff',
+              color: '#1e40af',
+              padding: '0.35rem 0.75rem',
+              borderRadius: '6px',
+              fontWeight: '800',
+              margin: '0.45rem 0',
+              border: '1px solid #bfdbfe'
+            }}>
+              {safeLine}
+            </div>
+          );
+        }
+
         const parts = safeLine.split(/(\*\*[^*]+\*\*)/g);
         return (
           <div key={lIdx} style={{ marginBottom: '0.35rem' }}>
@@ -33,7 +133,14 @@ function FormattedStoryText({ text, placeholder }) {
               if (part && part.startsWith('**') && part.endsWith('**')) {
                 const innerText = part.slice(2, -2);
                 return (
-                  <strong key={pIdx} style={{ color: 'var(--primary)', fontWeight: '800', background: 'var(--primary-light)', padding: '0.08rem 0.3rem', borderRadius: '4px' }}>
+                  <strong key={pIdx} style={{
+                    color: 'var(--primary)',
+                    fontWeight: '800',
+                    background: 'var(--primary-light)',
+                    padding: '0.1rem 0.35rem',
+                    borderRadius: '4px',
+                    border: '1px solid var(--border-color)'
+                  }}>
                     {innerText}
                   </strong>
                 );
@@ -55,13 +162,15 @@ export default function QuestionDetailView({
   theme, 
   onToggleTheme,
   isSidebarCollapsed,
-  onToggleSidebar
+  onToggleSidebar,
+  onOpenMobileMenu
 }) {
   const [codeCopied, setCodeCopied] = useState(false);
   const [isAiGenerating, setIsAiGenerating] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('Python');
   const [questionLang, setQuestionLang] = useState('EN'); // 'EN' or 'HI'
   const [rightPaneTab, setRightPaneTab] = useState('ALL'); // 'ALL', 'QUESTION', 'STORY', 'BOTTLENECK'
+  const [mobileTab, setMobileTab] = useState('CODE'); // 'CODE' or 'STORY' (Mobile view switch)
   const [isEditingStory, setIsEditingStory] = useState(false);
   const [isEditingBottleneck, setIsEditingBottleneck] = useState(false);
   const [isFullscreenEditingStory, setIsFullscreenEditingStory] = useState(false);
@@ -178,29 +287,41 @@ export default function QuestionDetailView({
     <div className="main-workspace">
       {/* Workspace Header */}
       <div className="workspace-header">
-        <div style={{ flex: 1, marginRight: '1rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.2rem' }}>
-            <span className="question-auto-index">#{autoProblemNumber}</span>
-            <span className={`badge-difficulty-${story.difficulty?.toLowerCase() || 'medium'}`}>
-              {story.difficulty || 'Medium'}
-            </span>
+        <div style={{ flex: 1, marginRight: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          {/* Mobile Hamburger Menu Trigger */}
+          <button 
+            onClick={onOpenMobileMenu}
+            className="mobile-hamburger-btn"
+            title="Open Questions Sidebar Menu"
+          >
+            <Menu size={22} color="var(--primary)" />
+          </button>
+
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.2rem' }}>
+              <span className="question-auto-index">#{autoProblemNumber}</span>
+              <span className={`badge-difficulty-${story.difficulty?.toLowerCase() || 'medium'}`}>
+                {story.difficulty || 'Medium'}
+              </span>
+            </div>
+            
+            {/* Editable Question Title */}
+            <input 
+              type="text" 
+              className="editable-title-input"
+              value={story.title || ''}
+              onChange={(e) => handleTitleChange(e.target.value)}
+              placeholder="Type question title here..."
+              title="Click to edit problem title"
+            />
           </div>
-          
-          {/* Editable Question Title */}
-          <input 
-            type="text" 
-            className="editable-title-input"
-            value={story.title || ''}
-            onChange={(e) => handleTitleChange(e.target.value)}
-            placeholder="Type question title here..."
-            title="Click to edit problem title"
-          />
         </div>
 
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
           {/* Focus Mode Toggle */}
           <button
             onClick={onToggleSidebar}
+            className="desktop-only-btn"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -244,7 +365,7 @@ export default function QuestionDetailView({
             title={`Generate ${selectedLanguage} Code & Story using Groq AI`}
           >
             {isAiGenerating ? <Loader2 className="spin" size={16} /> : <Sparkles size={16} color="#fbbf24" />}
-            {isAiGenerating ? 'Generating with AI...' : `✨ AI Generate (${selectedLanguage})`}
+            {isAiGenerating ? 'Generating...' : `✨ AI Generate (${selectedLanguage})`}
           </button>
 
           {/* Theme Toggle Button */}
@@ -292,10 +413,26 @@ export default function QuestionDetailView({
         </div>
       </div>
 
+      {/* MOBILE WORKSPACE TAB SWITCHER */}
+      <div className="mobile-view-tabs">
+        <button
+          className={`mobile-tab-btn ${mobileTab === 'CODE' ? 'active' : ''}`}
+          onClick={() => setMobileTab('CODE')}
+        >
+          <Code size={16} /> Solution Code ({selectedLanguage})
+        </button>
+        <button
+          className={`mobile-tab-btn ${mobileTab === 'STORY' ? 'active' : ''}`}
+          onClick={() => setMobileTab('STORY')}
+        >
+          <BookOpen size={16} /> Story & Notes
+        </button>
+      </div>
+
       {/* Split Workspace Body */}
       <div className="workspace-split-body">
         {/* LEFT PANE: Solution Code Editor */}
-        <div className="notepad-pane">
+        <div className={`notepad-pane ${mobileTab === 'CODE' ? 'mobile-visible' : 'mobile-hidden'}`}>
           <div className="code-editor-block">
             <div className="code-editor-header">
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
@@ -365,7 +502,7 @@ export default function QuestionDetailView({
         </div>
 
         {/* RIGHT PANE: Story & Notes Section with Focus Navigation Tabs */}
-        <div className="story-side-pane">
+        <div className={`story-side-pane ${mobileTab === 'STORY' ? 'mobile-visible' : 'mobile-hidden'}`}>
           {/* Quick Focus Section Tabs */}
           <div style={{ display: 'flex', background: 'var(--bg-card)', padding: '0.2rem', borderRadius: '10px', border: '1px solid var(--border-color)', gap: '0.2rem' }}>
             <button
@@ -572,7 +709,7 @@ export default function QuestionDetailView({
                 <div style={{ background: 'var(--bg-app)', padding: '0.9rem', borderRadius: '8px', border: '1px solid var(--border-color)', minHeight: '140px' }}>
                   <FormattedStoryText 
                     text={story.mindfulStory} 
-                    placeholder="Click 'Edit Text' or '✨ AI Generate' to populate the story approach..." 
+                    placeholder="Click '✨ AI Generate' to generate a colorful Hinglish story approach!" 
                   />
                 </div>
               )}
@@ -609,7 +746,7 @@ export default function QuestionDetailView({
                 <div style={{ background: 'var(--bg-app)', padding: '0.9rem', borderRadius: '8px', border: '1px solid var(--border-color)', minHeight: '100px' }}>
                   <FormattedStoryText 
                     text={story.unforgettableBottleneck} 
-                    placeholder="Click 'Edit Text' or '✨ AI Generate' to populate the bottleneck and memory trick..." 
+                    placeholder="Click '✨ AI Generate' to generate the bottleneck trap & memory trick!" 
                   />
                 </div>
               )}
@@ -692,7 +829,7 @@ export default function QuestionDetailView({
                     />
                   ) : (
                     <div style={{ background: 'var(--bg-app)', padding: '1.25rem', borderRadius: '10px', border: '1px solid var(--border-color)', minHeight: '600px' }}>
-                      <FormattedStoryText text={story.mindfulStory} placeholder="No story content..." />
+                      <FormattedStoryText text={story.mindfulStory} placeholder="Click '✨ AI Generate' to generate a colorful Hinglish story approach!" />
                     </div>
                   )}
                 </div>
