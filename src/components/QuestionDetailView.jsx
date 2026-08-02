@@ -126,6 +126,24 @@ function FormattedStoryText({ text, placeholder }) {
           );
         }
 
+        // 🔁 Iteration Walkthrough & Step Badges
+        if (safeLine.includes('🔁') || safeLine.toLowerCase().includes('iteration walkthrough') || safeLine.toLowerCase().includes('iteration 1') || safeLine.toLowerCase().includes('iteration 2') || safeLine.toLowerCase().includes('iteration 3') || safeLine.toLowerCase().includes('pehle iteration') || safeLine.toLowerCase().includes('dusre iteration') || safeLine.toLowerCase().includes('teesre iteration')) {
+          return (
+            <div key={lIdx} style={{
+              background: '#f0fdf4',
+              color: '#166534',
+              padding: '0.4rem 0.8rem',
+              borderRadius: '8px',
+              fontWeight: '800',
+              margin: '0.5rem 0',
+              border: '1px solid #bbf7d0',
+              fontSize: '0.92rem'
+            }}>
+              {safeLine}
+            </div>
+          );
+        }
+
         const parts = safeLine.split(/(\*\*[^*]+\*\*)/g);
         return (
           <div key={lIdx} style={{ marginBottom: '0.35rem' }}>

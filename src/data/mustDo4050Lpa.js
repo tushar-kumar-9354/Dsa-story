@@ -7,10 +7,36 @@ export const mustDo4050LpaDataset = [
     tags: ["DP", "Recursion", "Math"],
     problemDescription: "The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is:\nF(0) = 0, F(1) = 1\nF(n) = F(n - 1) + F(n - 2), for n > 1.\n\nExample 1:\nInput: n = 2 -> Output: 1 (F(2) = F(1) + F(0) = 1 + 0 = 1)\n\nExample 2:\nInput: n = 4 -> Output: 3 (F(4) = F(3) + F(2) = 2 + 1 = 3)\n\nConstraints: 0 <= n <= 30",
     hindiDescription: "Fibonacci sequence ek aisi ginti hai jisme har naya nambar pichle do nambaro ka jod (sum) hota hai. F(0) = 0 aur F(1) = 1 se shuru hota hai. Aapko F(n) nikalna hai.",
-    mindfulStory: "🎭 **Asli Zindagi Ka Real Metaphor**: Ek **Bache ka Gakullak / Staircase Jump** game jisme har naye din ka pocket money pichle 2 dino ke pocket money ka total hota hai.\n\n📌 **Step-by-Step Visual Story**:\n- **STEP 1 (Base Cases)**: Agar n 0 hai toh 0 return karo, n 1 hai toh 1 return karo.\n- **STEP 2 (Iterative DP)**: Pointers **prev2 = 0** aur **prev1 = 1** rakho. Loop chalao 2 se n tak aur har baar **curr = prev1 + prev2** karke aage badho.\n- **STEP 3 (Return)**: Loop ke baad **prev1** hi aapka final F(n) answer hai.\n\n⚠️ **Khas Edge Cases**: n = 0 aur n = 1 ke liye recursive stack overflow avoid karo iteration use karke (O(1) space).",
+    mindfulStory: `🎭 **Asli Zindagi Ka Real Metaphor**: Ek **Bache ka Gakullak / Staircase Jump** game jisme har naye din ka pocket money pichle 2 dino ke pocket money ka total hota hai.
+
+📌 **Step-by-Step Visual Story**:
+- **STEP 1 (Base Cases)**: Agar n 0 hai toh 0 return karo, n 1 hai toh 1 return karo.
+- **STEP 2 (Iterative DP)**: Pointers **prev2 = 0** aur **prev1 = 1** rakho. Loop chalao 2 se n tak aur har baar **curr = prev1 + prev2** karke aage badho.
+- **STEP 3 (Return)**: Loop ke baad **prev1** hi aapka final F(n) answer hai.
+
+🔁 **Step-by-Step Live Iteration Walkthrough (3 Iterations in Story Mode)**:
+- 🔁 Iteration 1 (i = 2 for n = 4): Pehle iteration mei curr = prev1 (1) + prev2 (0) = 1. State update: prev2 = 1, prev1 = 1.
+- 🔁 Iteration 2 (i = 3 for n = 4): Dusre iteration mei curr = prev1 (1) + prev2 (1) = 2. State update: prev2 = 1, prev1 = 2.
+- 🔁 Iteration 3 (i = 4 for n = 4): Teesre iteration mei curr = prev1 (2) + prev2 (1) = 3. State update: prev2 = 2, prev1 = 3. Final answer 3 mil gaya!
+
+⚠️ **Khas Edge Cases**: n = 0 aur n = 1 ke liye recursive stack overflow avoid karo iteration use karke (O(1) space).`,
     unforgettableBottleneck: "⚡ **#1 Critical Trap**: Plain recursion `fib(n-1) + fib(n-2)` O(2^n) TLE deta hai! Hamesha O(N) Iterative DP ya Memoization use karo.\n\n💡 **Memory Trick**: Do pichle dino ka kharcha jod kar naya din calculate karo!",
     rawCode: `class Solution:
     def fib(self, n: int) -> int:
+        # 🛠️ RUN & DEBUG TRACE (Hinglish Debugging Log):
+        # Sample Input: n = 4
+        # --------------------------------------------------
+        # 🔍 Iteration 1 (i = 2):
+        #   -> curr = prev1 (1) + prev2 (0) = 1
+        #   -> prev2 = 1, prev1 = 1
+        # 🔍 Iteration 2 (i = 3):
+        #   -> curr = prev1 (1) + prev2 (1) = 2
+        #   -> prev2 = 1, prev1 = 2
+        # 🔍 Iteration 3 (i = 4):
+        #   -> curr = prev1 (2) + prev2 (1) = 3
+        #   -> prev2 = 2, prev1 = 3
+        # --------------------------------------------------
+        
         # 📍 STEP 1 (Story se): Base cases 0 aur 1 handle karo
         if n <= 1:
             return n
@@ -34,10 +60,33 @@ export const mustDo4050LpaDataset = [
     tags: ["DP", "Math"],
     problemDescription: "You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?\n\nExample 1:\nInput: n = 2 -> Output: 2 (1 step + 1 step, OR 2 steps)\n\nExample 2:\nInput: n = 3 -> Output: 3 (1+1+1, 1+2, 2+1)\n\nConstraints: 1 <= n <= 45",
     hindiDescription: "Aap CD (Staircase) chadh rahe ho. Har baar aap ya toh 1 step chadh sakte ho ya 2 steps. n steps tak pahunchne ke kitne alag alag raste hain?",
-    mindfulStory: "🎭 **Asli Zindagi Ka Real Metaphor**: Ek **Bacha CD par chhlang laga raha hai**. Har step pe khade hoke wo sochta hai: 'main yahan pichle step (i-1) se 1 step leke aaya hu YA (i-2) step se 2 step ki chhalang mar ke aaya hu!'\n\n📌 **Step-by-Step Visual Story**:\n- **STEP 1 (Base Case)**: n = 1 -> 1 way, n = 2 -> 2 ways.\n- **STEP 2 (DP State)**: ways(i) = ways(i-1) + ways(i-2).\n- **STEP 3 (Space Optimization)**: Sirf 2 variables rakho space O(1) ke liye.\n\n⚠️ **Khas Edge Cases**: n = 1 ke liye fast exit exit hander.",
+    mindfulStory: `🎭 **Asli Zindagi Ka Real Metaphor**: Ek **Bacha CD par chhlang laga raha hai**. Har step pe khade hoke wo sochta hai: 'main yahan pichle step (i-1) se 1 step leke aaya hu YA (i-2) step se 2 step ki chhalang mar ke aaya hu!'
+
+📌 **Step-by-Step Visual Story**:
+- **STEP 1 (Base Case)**: n = 1 -> 1 way, n = 2 -> 2 ways.
+- **STEP 2 (DP State)**: ways(i) = ways(i-1) + ways(i-2).
+- **STEP 3 (Space Optimization)**: Sirf 2 variables rakho space O(1) ke liye.
+
+🔁 **Step-by-Step Live Iteration Walkthrough (3 Iterations in Story Mode)**:
+- 🔁 Iteration 1 (i = 3): Pehle iteration mei current = one_step_behind (2) + two_steps_behind (1) = 3. Shift: two_steps_behind = 2, one_step_behind = 3.
+- 🔁 Iteration 2 (i = 4): Dusre iteration mei current = 3 + 2 = 5. Shift: two_steps_behind = 3, one_step_behind = 5.
+- 🔁 Iteration 3 (i = 5): Teesre iteration mei current = 5 + 3 = 8. Shift: two_steps_behind = 5, one_step_behind = 8. Step 5 tak total 8 raste!
+
+⚠️ **Khas Edge Cases**: n = 1 ke liye fast exit exit hander.`,
     unforgettableBottleneck: "⚡ **#1 Critical Trap**: Ye problem bilkul Fibonacci sequence jaisi hai bas shuruat n=1 pe 1 aur n=2 pe 2 se hoti hai!\n\n💡 **Memory Trick**: Har step = pichle step tak pahunchne ke raste + usse ek pehle wale tak ke raste!",
     rawCode: `class Solution:
     def climbStairs(self, n: int) -> int:
+        # 🛠️ RUN & DEBUG TRACE (Hinglish Debugging Log):
+        # Sample Input: n = 4
+        # --------------------------------------------------
+        # 🔍 Iteration 1 (i = 3):
+        #   -> current = one_step_behind (2) + two_steps_behind (1) = 3
+        #   -> two_steps_behind = 2, one_step_behind = 3
+        # 🔍 Iteration 2 (i = 4):
+        #   -> current = one_step_behind (3) + two_steps_behind (2) = 5
+        #   -> two_steps_behind = 3, one_step_behind = 5
+        # --------------------------------------------------
+        
         # 📍 STEP 1 (Story se): Base cases setup
         if n <= 2:
             return n
@@ -63,10 +112,36 @@ export const mustDo4050LpaDataset = [
     tags: ["DP", "Array"],
     problemDescription: "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. Adjacent houses have security systems connected — it will automatically contact the police if two adjacent houses were broken into on the same night. Return the maximum amount of money you can rob tonight without alerting the police.\n\nExample 1:\nInput: nums = [1,2,3,1] -> Output: 4 (Rob house 1 ($1) and house 3 ($3) -> total $4)\n\nConstraints: 1 <= nums.length <= 100",
     hindiDescription: "Aap ek chor (robber) ho jo ek raste ke makano me chori kar raha hai. Shart ye hai ki do lagatar (adjacent) makano me chori karoge toh alarm baj jayega. Max kitna paisa chura sakte ho?",
-    mindfulStory: "🎭 **Asli Zindagi Ka Real Metaphor**: **Smart Chor ka Hisab**: Har makan pe khade hoke chor 2 option dekhta hai: Option A (Is makan me chori karu + pichle ko chhod kar uske pehle tak ka profit) VS Option B (Is makan ko chhod du aur pichle makan tak ka total profit le lu).\n\n📌 **Step-by-Step Visual Story**:\n- **STEP 1**: `rob1 = 0`, `rob2 = 0` (Dono pichle best profits tracking).\n- **STEP 2**: Har makan `n` ke liye `max(n + rob1, rob2)` calculate karo.\n- **STEP 3**: Update karo `rob1 = rob2` aur `rob2 = temp`.\n\n⚠️ **Khas Edge Cases**: Jab array me 1 hi makan ho.",
+    mindfulStory: `🎭 **Asli Zindagi Ka Real Metaphor**: **Smart Chor ka Hisab** (nums = [1, 2, 3, 1]): Har makan pe khade hoke chor 2 option dekhta hai: Option A (Is makan me chori karu + pichle ko chhod kar uske pehle tak ka profit) VS Option B (Is makan ko chhod du aur pichle makan tak ka total profit le lu).
+
+📌 **Step-by-Step Visual Story**:
+- **STEP 1**: \`rob1 = 0\`, \`rob2 = 0\` (Dono pichle best profits tracking).
+- **STEP 2**: Har makan \`n\` ke liye \`max(n + rob1, rob2)\` calculate karo.
+- **STEP 3**: Update karo \`rob1 = rob2\` aur \`rob2 = temp\`.
+
+🔁 **Step-by-Step Live Iteration Walkthrough (3 Iterations in Story Mode)**:
+- 🔁 Iteration 1 (house = 1): temp = max(1 + 0, 0) = 1. State update: rob1 = 0, rob2 = 1.
+- 🔁 Iteration 2 (house = 2): temp = max(2 + 0, 1) = 2. State update: rob1 = 1, rob2 = 2.
+- 🔁 Iteration 3 (house = 3): temp = max(3 + 1, 2) = 4. State update: rob1 = 2, rob2 = 4. Max profit = 4!
+
+⚠️ **Khas Edge Cases**: Jab array me 1 hi makan ho.`,
     unforgettableBottleneck: "⚡ **#1 Critical Trap**: Do adjacent houses ko robbing se roko! DP transition: `max(curr + prev2, prev1)`.\n\n💡 **Memory Trick**: Ya toh aaj loot aur parson tak ka le, ya aaj chhod aur kal tak ka le!",
     rawCode: `class Solution:
     def rob(self, nums: list[int]) -> int:
+        # 🛠️ RUN & DEBUG TRACE (Hinglish Debugging Log):
+        # Sample Input: nums = [1, 2, 3, 1]
+        # --------------------------------------------------
+        # 🔍 Iteration 1 (n = 1):
+        #   -> temp = max(1 + rob1(0), rob2(0)) = 1
+        #   -> rob1 = 0, rob2 = 1
+        # 🔍 Iteration 2 (n = 2):
+        #   -> temp = max(2 + rob1(0), rob2(1)) = 2
+        #   -> rob1 = 1, rob2 = 2
+        # 🔍 Iteration 3 (n = 3):
+        #   -> temp = max(3 + rob1(1), rob2(2)) = 4
+        #   -> rob1 = 2, rob2 = 4
+        # --------------------------------------------------
+        
         # 📍 STEP 1 (Story se): Pichle 2 makano ke max profit trackers
         rob1, rob2 = 0, 0
         

@@ -26,16 +26,31 @@ Generate a JSON object containing complete learning content. Return EXACTLY vali
      - STEP 1 (Setup & Roles): Define initial variables & pointers as physical roles.
      - STEP 2 (Main Loop & Logic): Explain decision-making step by step.
      - STEP 3 (Final Answer): Explain returning the result.
+   - 🔁 Step-by-Step Live Iteration Walkthrough (MANDATORY AT LEAST 3 ITERATIONS IN HINGLISH STORY MODE):
+     - Give a concrete sample input (e.g. nums = [2, 7, 11, 15], target = 9).
+     - Walkthrough AT LEAST 3 iterations step-by-step in Hinglish story format:
+       - 🔁 Iteration 1: "Pehle iteration mein hum..." (Show initial values, character action, decisions & state changes).
+       - 🔁 Iteration 2: "Dusre iteration mein hum..." (Show next element check, variable updates, decisions).
+       - 🔁 Iteration 3: "Teesre iteration mein hum..." (Show third step execution, target hit or state update).
    - ⚠️ Khas Edge Cases: Boundary conditions in clear Hinglish.
 
 5. "unforgettableBottleneck": Must be a SINGLE STRING formatted as:
    "⚡ #1 Critical Trap: [Describe the exact TLE/overflow/index trap]\n\n💡 Memory Trick: [1-sentence shortcut to remember the logic]"
 
 6. "rawCode": Optimal solution code written STRICTLY in ${language}.
-   Include line comments that EXPLICITLY link back to the story steps:
-   // 📍 STEP 1 (Story se): [Describe variable setup in Hinglish]
-   // 📍 STEP 2 (Story se): [Describe main loop decision in Hinglish]
-   // 📍 STEP 3 (Story se): [Describe return value in Hinglish]
+   Must include BOTH narrative step comments AND a detailed "RUN & DEBUG TRACE" comment block in Hinglish debugging style:
+   - Include a top or inline comment block showing step-by-step execution for AT LEAST 3 ITERATIONS:
+     // 🛠️ RUN & DEBUG TRACE (Hinglish Debugging Log):
+     // Sample Input: [Provide sample input]
+     // --------------------------------------------------
+     // 🔍 Iteration 1: [variable values] -> [condition check in Hinglish] -> [action/update]
+     // 🔍 Iteration 2: [variable values] -> [condition check in Hinglish] -> [action/update]
+     // 🔍 Iteration 3: [variable values] -> [condition check in Hinglish] -> [action/update]
+     // --------------------------------------------------
+   - Also include line-by-line comments linking to story steps:
+     // 📍 STEP 1 (Story se): [Variable setup in Hinglish]
+     // 📍 STEP 2 (Story se): [Main loop decision in Hinglish]
+     // 📍 STEP 3 (Story se): [Return value in Hinglish]
 
 Respond ONLY with a valid JSON object matching this schema.`;
 

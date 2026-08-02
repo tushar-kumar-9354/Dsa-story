@@ -11,8 +11,9 @@ Title & Code:
 
 STRICT FORMATTING RULES TO FOLLOW:
 1. The Mindful Story Approach: Explain the core logic as a vivid story with physical metaphors (e.g. two pointers = two friends, hashmap = memory diary).
-2. The "Unforgettable" Bottleneck: Clearly highlight the exact tricky part where people get stuck and the breakthrough logic.
-3. Line-by-Line Hinglish Comments: Rewrite the code and add a Hinglish (Hindi + English) comment to EVERY single line as a continuation of the story.`;
+2. Live Step-by-Step Iteration Walkthrough (AT LEAST 3 ITERATIONS): Include dry-run examples in story mode ("Pehle iteration mein hum...", "Dusre iteration mein hum...", "Teesre iteration mein hum...").
+3. The "Unforgettable" Bottleneck: Clearly highlight the exact tricky part where people get stuck and the breakthrough logic.
+4. Hinglish Run & Debug Code Comments: Include top/inline comment block tracing variable states and decisions for AT LEAST 3 iterations in debugging "Run & Debug" style.`;
 
   const copyPrompt = () => {
     navigator.clipboard.writeText(promptTemplate);
@@ -37,12 +38,13 @@ STRICT FORMATTING RULES TO FOLLOW:
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <div style={{ background: 'rgba(139, 92, 246, 0.1)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(139, 92, 246, 0.25)' }}>
           <h4 style={{ color: '#c4b5fd', fontSize: '0.9rem', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <AlertCircle size={15} /> 3 Strict Formatting Rules Applied
+            <AlertCircle size={15} /> Strict Formatting Rules Applied
           </h4>
           <ul style={{ paddingLeft: '1.25rem', fontSize: '0.85rem', color: '#d1d5db', lineHeight: '1.6' }}>
             <li><strong>Mindful Story Approach:</strong> Physical metaphors & character roles (e.g. pointers = friends).</li>
+            <li><strong>3-Iteration Story Walkthrough:</strong> Detailed dry run for at least 3 iterations in Hinglish story mode.</li>
             <li><strong>Unforgettable Bottleneck:</strong> The exact trick where coders freeze & breakthrough logic.</li>
-            <li><strong>Line-by-Line Hinglish Comments:</strong> Narrative comments on <em>every single line</em>.</li>
+            <li><strong>Run & Debug Code Trace:</strong> Hinglish debug log comments tracing variables for 3 iterations.</li>
           </ul>
         </div>
 
