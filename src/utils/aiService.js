@@ -38,19 +38,27 @@ Generate a JSON object containing complete learning content. Return EXACTLY vali
    "⚡ #1 Critical Trap: [Describe the exact TLE/overflow/index trap]\n\n💡 Memory Trick: [1-sentence shortcut to remember the logic]"
 
 6. "rawCode": Optimal solution code written STRICTLY in ${language}.
-   Must include BOTH narrative step comments AND a detailed "RUN & DEBUG TRACE" comment block in Hinglish debugging style:
-   - Include a top or inline comment block showing step-by-step execution for AT LEAST 3 ITERATIONS:
-     // 🛠️ RUN & DEBUG TRACE (Hinglish Debugging Log):
-     // Sample Input: [Provide sample input]
-     // --------------------------------------------------
-     // 🔍 Iteration 1: [variable values] -> [condition check in Hinglish] -> [action/update]
-     // 🔍 Iteration 2: [variable values] -> [condition check in Hinglish] -> [action/update]
-     // 🔍 Iteration 3: [variable values] -> [condition check in Hinglish] -> [action/update]
-     // --------------------------------------------------
-   - Also include line-by-line comments linking to story steps:
-     // 📍 STEP 1 (Story se): [Variable setup in Hinglish]
-     // 📍 STEP 2 (Story se): [Main loop decision in Hinglish]
-     // 📍 STEP 3 (Story se): [Return value in Hinglish]
+   CRITICAL MANDATORY REQUIREMENT FOR CODE COMMENTS:
+   EVERY SINGLE LINE OF CODE MUST HAVE AN INLINE COMMENT (using # for Python, // for Java/C++/JS) that explains BOTH:
+   a) How that exact function/method/operator works with a mini general example (e.g. 'w.split() # how split() works: text = "Python   is   fun" -> result = text.split() -> ["Python", "is", "fun"]').
+   b) Exactly how that line evaluates and transforms variables for the problem's FIRST Input/Output Example.
+
+   Example inline comment format for Python:
+   'words = text.split() # how split() works: e.g. text = "Python   is   fun" -> text.split() -> ["Python", "is", "fun"] | Example 1 (text = "A man, a plan"): words = ["A", "man,", "a", "plan,"]'
+
+   Example inline comment format for JavaScript/Java:
+   'const map = new Map(); // how Map() works: stores key-value pairs e.g. map.set("a", 1) -> {"a": 1} | Example 1: map initialized as empty Map {}'
+
+   Make sure EVERY SINGLE LINE of code in "rawCode" has this dual inline comment (how operation works with mini example + execution state on Example 1).
+
+   Also include the top "RUN & DEBUG TRACE" comment block:
+   // 🛠️ RUN & DEBUG TRACE (Hinglish Debugging Log):
+   // Sample Input 1: [First Input Example]
+   // --------------------------------------------------
+   // 🔍 Iteration 1: [variable values] -> [condition check] -> [action/update]
+   // 🔍 Iteration 2: [variable values] -> [condition check] -> [action/update]
+   // 🔍 Iteration 3: [variable values] -> [condition check] -> [action/update]
+   // --------------------------------------------------
 
 Respond ONLY with a valid JSON object matching this schema.`;
 
